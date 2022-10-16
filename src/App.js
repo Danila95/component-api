@@ -23,13 +23,24 @@ function App() {
   )
 }
 
+  const pointPath = {
+    firstPoint: {
+      nameField: 'data',
+      index: false
+    },
+    secondPoint: {
+      nameField: 'quotes',
+      index: false
+    }
+  }
+
   return (
     <div className="App">
       <h1 className="text-[20px] font-bold text-center">Цитаты великих людей</h1>
       <RequestServerApi
         apiQuery='quotes'
         name_component={TableContent}
-        path_to_data_json='.data.quotes'
+        pointPath={pointPath}
       />
     </div>
   );

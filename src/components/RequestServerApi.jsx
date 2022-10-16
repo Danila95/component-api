@@ -11,7 +11,7 @@ const SERVER_API = 'https://dummyjson.com'
     подается подтянутые данные из api <*nameComponent* data={resApi}/>
     pathToDataJson - путь до массива данных в JSON
 */
-const RequestServerApi = ({apiQuery: path, name_component, path_to_data_json}) => {
+const RequestServerApi = ({apiQuery: path, name_component, pointPath}) => {
     const [resApi, setResApi] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -25,9 +25,29 @@ const RequestServerApi = ({apiQuery: path, name_component, path_to_data_json}) =
             setIsLoading(true)
             const response = await axios.get(apiQuery)
             if (response.status === 200) {
-                console.log(response)
-                // сюда должнен подаваться сгенерированный (из пропса path_to_data_json) путь до массива данных из response в json
-                setResApi(response.data.quotes) // <- path_to_data_json
+                let result = response[pointPath.firstPoint.nameField]
+                if (pointPath.firstPoint.index){
+                    result = result[pointPath.firstPoint.index]
+                }
+                if (pointPath.secondPoint) {
+                    result = result[pointPath.secondPoint.nameField]
+                    if (pointPath.secondPoint.index) {
+                        result = result[pointPath.secondPoint.index]
+                    }
+                }
+                if (pointPath.thirdPoint) {
+                    result = result[pointPath.thirdPoint.nameField]
+                    if (pointPath.thirdPoint.index) {
+                        result = result[pointPath.thirdPoint.index]
+                    }
+                }
+                if (pointPath.fourthPoint) {
+                    result = result[pointPath.fourthPoint.nameField]
+                    if (pointPath.fourthPoint.index) {
+                        result = result[pointPath.fourthPoint.index]
+                    }
+                }
+                setResApi(result)
             } else {
                 setIsError(true)
             }
